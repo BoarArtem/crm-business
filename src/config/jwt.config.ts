@@ -13,6 +13,6 @@ export async function getJwtConfig(
     verifyOptions: {
       algorithms: ['HS256'],
       ignoreExpiration: false,
-    }
+    },
   };
 }

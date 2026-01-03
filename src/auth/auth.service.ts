@@ -1,60 +1,39 @@
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import {
   ConflictException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { RegisterRequest } from './dto/register.dto';
 import { PrismaService } from '../prisma/prisma.service';
-import { hash, verify } from 'argon2';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import type { JwtPayload } from './interfaces/jwt.interface';
+import { JwtPayload } from './interfaces/jwt.interface';
 import { StringValue } from 'ms';
-import { LoginRequest } from './dto/login.dto';
-import type { Response, Request } from 'express';
-import { isDev } from '../utils/is-dev.util';
+import { Response, Request } from 'express';
+import { RegisterDto } from './dto/register.dto';
+import { hash, verify } from 'argon2';
+import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
   private readonly JWT_ACCESS_TOKEN_TTL: string;
   private readonly JWT_REFRESH_TOKEN_TTL: string;
 
-  private readonly COOKIE_DOMAIN: string;
-
   constructor(
     private readonly prismaService: PrismaService,
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
   ) {
-    // this.JWT_SECRET = configService.getOrThrow<string>('JWT_SECRET');
     this.JWT_ACCESS_TOKEN_TTL = configService.getOrThrow<string>(
       'JWT_ACCESS_TOKEN_TTL',
     );
     this.JWT_REFRESH_TOKEN_TTL = configService.getOrThrow<string>(
       'JWT_REFRESH_TOKEN_TTL',
     );
-    this.COOKIE_DOMAIN = configService.getOrThrow<string>('COOKIE_DOMAIN');
   }
 
-  async validate(id: string) {
-    const user = await this.prismaService.user.findUnique({
-      where: {
-        id,
-      },
-    });
-
-    if (!user) {
-      throw new NotFoundException('Пользователь не найден');
-    }
-
-    return user;
-  }
-
-  async register(res: Response, dto: RegisterRequest) {
-    const { name, email, password } = dto;
+  async register(res: Response, dto: RegisterDto) {
+    const { firstName, lastName, email, password } = dto;
 
     const existUser = await this.prismaService.user.findUnique({
       where: {
@@ -63,21 +42,23 @@ export class AuthService {
     });
 
     if (existUser) {
-      throw new ConflictException('Пользователь с такой почтой уже существует');
+      throw new ConflictException('Пользователь уже существует');
     }
 
     const user = await this.prismaService.user.create({
       data: {
-        name,
+        firstName,
+        lastName,
         email,
-        password: await hash(password), // argon2 - хеш пароля
+        businessQuantity: 0,
+        password: await hash(password),
       },
     });
 
     return this.auth(res, user.id);
   }
 
-  async login(res: Response, dto: LoginRequest) {
+  async login(res: Response, dto: LoginDto) {
     const { email, password } = dto;
 
     const user = await this.prismaService.user.findUnique({
@@ -91,26 +72,26 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new NotFoundException('Пользователь не найден');
+      throw new NotFoundException('Такой пользователь не найден');
     }
 
-    const isValidPassword = await verify(user.password, password);
+    const validUserPassword = await verify(user.password, password);
 
-    if (!isValidPassword) {
-      throw new NotFoundException('Пользователь не найден');
+    if (!validUserPassword) {
+      throw new NotFoundException('Такой пользователь не найден');
     }
 
     return this.auth(res, user.id);
   }
 
-  async refresh(req: Request, res: Response) {
+  async refresh(res: Response, req: Request) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const refreshToken = req.cookies['refreshToken'];
 
     if (!refreshToken) {
-      throw new UnauthorizedException('Недействительный refresh-token');
+      throw new UnauthorizedException('Недействительный refresh token');
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const payload: JwtPayload = await this.jwtService.verifyAsync(refreshToken);
 
     if (payload) {
@@ -124,35 +105,38 @@ export class AuthService {
       });
 
       if (!user) {
-        throw new NotFoundException('Пользователь не найден');
+        throw new NotFoundException('Такой пользователь не найден');
       }
 
       return this.auth(res, user.id);
     }
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async logout(res: Response) {
     this.setCookie(res, 'refreshToken', new Date(0));
+
+    return 'Пользователь успешно вышел с аккаунта';
   }
 
   private auth(res: Response, id: string) {
-    const { accessToken, refreshToken } = this.generateTokens(id);
+    const { accessToken, refreshToken } = this.generateToken(id);
 
     this.setCookie(
       res,
       refreshToken,
       new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
     );
+
     return { accessToken };
   }
 
-  private generateTokens(id: string) {
+  private generateToken(id: string) {
     const payload: JwtPayload = { id };
 
     const accessToken = this.jwtService.sign(payload, {
       expiresIn: this.JWT_ACCESS_TOKEN_TTL as StringValue,
     });
-
     const refreshToken = this.jwtService.sign(payload, {
       expiresIn: this.JWT_REFRESH_TOKEN_TTL as StringValue,
     });
@@ -163,10 +147,10 @@ export class AuthService {
   private setCookie(res: Response, value: string, expires: Date) {
     res.cookie('refreshToken', value, {
       httpOnly: true,
-      domain: this.COOKIE_DOMAIN,
+      domain: 'localhost',
       expires,
-      sameSite: isDev(this.configService) ? 'lax' : 'none',
-      secure: !isDev(this.configService),
+      sameSite: 'lax',
+      secure: false,
     });
   }
 }
