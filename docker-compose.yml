@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   api:
     build: .
@@ -5,16 +7,17 @@ services:
     ports:
       - "3000:3000"
     env_file:
-      - .env
+      - .env         # dotenv пробрасывается внутрь контейнера
     depends_on:
       - db
     restart: unless-stopped
+    command: sh -c "npx prisma migrate deploy && node dist/main.js"
+    # При старте контейнера сначала выполняем миграции, затем запускаем NestJS
 
   db:
     image: postgres:16-alpine
     container_name: crm-pet-postgres
     environment:
-      DATABASE_URL: ${DATABASE_URL}
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

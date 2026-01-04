@@ -23,10 +23,20 @@ export class CustomerService {
     const customer = await this.prismaService.customer.create({
       data: {
         ...dto,
-        userId: userId,
+        user: {
+          connect: { id: userId },
+        },
       },
     });
 
     return customer;
+  }
+
+  async getAllCustomer(userId: string) {
+    return await this.prismaService.customer.findMany({
+      where: {
+        userId,
+      },
+    });
   }
 }
