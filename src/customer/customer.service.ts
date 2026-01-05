@@ -1,4 +1,8 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 
@@ -38,5 +42,20 @@ export class CustomerService {
         userId,
       },
     });
+  }
+
+  async getCustomerById(id: string, userId: string) {
+    const customer = await this.prismaService.customer.findFirst({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    if (!customer) {
+      throw new NotFoundException('Данный клиент не найден');
+    }
+
+    return customer;
   }
 }

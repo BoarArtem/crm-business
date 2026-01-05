@@ -131,6 +131,10 @@ export class AuthService {
     return { accessToken };
   }
 
+  async verifyJwt(token: string) {
+    return this.jwtService.signAsync(token);
+  }
+
   private generateToken(id: string) {
     const payload: JwtPayload = { id };
 

@@ -1,5 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import type { Request } from 'express';
 import { CreateCustomerDto } from './dto/create-customer.dto';
@@ -25,5 +33,14 @@ export class CustomerController {
     const userId = req.user.id;
 
     return this.customerService.getAllCustomer(userId);
+  }
+
+  @Get(':id')
+  @UseGuards(JwtAuthGuard)
+  getCustomerById(@Param('id') id: string, @Req() req: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const userId = req.user.id;
+
+    return this.customerService.getCustomerById(id, userId);
   }
 }
