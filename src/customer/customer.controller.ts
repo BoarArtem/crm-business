@@ -2,6 +2,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Post,
@@ -17,6 +18,7 @@ import {
   ApiBody,
   ApiConflictResponse,
   ApiCreatedResponse,
+  ApiNotFoundResponse,
   ApiOperation,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
@@ -43,6 +45,12 @@ export class CustomerController {
     return this.customerService.createCustomer(dto, userId);
   }
 
+  @ApiOperation({
+    summary: 'Получение всех клиентов пользователя',
+    description: 'Позволяет получить всех клиентов который создал пользователь',
+  })
+  @ApiNotFoundResponse({ description: 'Клиенты не найдены' })
+  @ApiBearerAuth('access-token')
   @Get()
   @UseGuards(JwtAuthGuard)
   getAllCustomers(@Req() req: any) {
@@ -52,6 +60,12 @@ export class CustomerController {
     return this.customerService.getAllCustomer(userId);
   }
 
+  @ApiOperation({
+    summary: 'Получение одного клиента за его айди',
+    description: 'Позволяет получить информацию об клиента введя его айди',
+  })
+  @ApiNotFoundResponse({ description: 'Данный клиент не найден' })
+  @ApiBearerAuth('access-token')
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   getCustomerById(@Param('id') id: string, @Req() req: any) {
@@ -59,5 +73,20 @@ export class CustomerController {
     const userId = req.user.id;
 
     return this.customerService.getCustomerById(id, userId);
+  }
+
+  @ApiOperation({
+    summary: 'Удаление пользователя за его айди',
+    description: 'Позволяет удалить пользователя по его айди',
+  })
+  @ApiNotFoundResponse({ description: 'Клиент не найден' })
+  @ApiBearerAuth('access-token')
+  @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  deleteCustomerById(@Param('id') id: string, @Req() req: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const userId = req.user.id;
+
+    return this.customerService.deleteCustomerById(id, userId);
   }
 }

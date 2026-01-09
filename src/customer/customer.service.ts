@@ -37,11 +37,17 @@ export class CustomerService {
   }
 
   async getAllCustomer(userId: string) {
-    return await this.prismaService.customer.findMany({
+    const allCustomers = await this.prismaService.customer.findMany({
       where: {
         userId,
       },
     });
+
+    if (!allCustomers) {
+      throw new NotFoundException('Клиенты не найдены');
+    }
+
+    return allCustomers;
   }
 
   async getCustomerById(id: string, userId: string) {
@@ -57,5 +63,20 @@ export class CustomerService {
     }
 
     return customer;
+  }
+
+  async deleteCustomerById(id: string, userId: string) {
+    const customer = await this.prismaService.customer.delete({
+      where: {
+        id,
+        userId,
+      },
+    });
+
+    if (!customer) {
+      throw new NotFoundException('Клиент не найден');
+    }
+
+    return 'Клиент удален';
   }
 }

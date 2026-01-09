@@ -6,7 +6,7 @@ import { LoginDto } from './dto/login.dto';
 import {
   ApiBody,
   ApiConflictResponse,
-  ApiCookieAuth,
+  ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -22,7 +22,7 @@ export class AuthController {
     description: 'Позволяет пользователю зарегестрироваться',
   })
   @ApiConflictResponse({ description: 'Такой пользователь уже найден' })
-  @ApiOkResponse({
+  @ApiCreatedResponse({
     description: 'Пользователь успешно зарегестрирован / отдаётся accessToken',
   })
   @ApiBody({ type: RegisterDto })
