@@ -62,12 +62,23 @@ export class BusinessService {
 
   // for future fixing
   async deleteBusinessById(id: string, directorId: string) {
-    const business = await this.prismaService.business.deleteMany({
-      where: {
-        id,
-        directorId,
-      },
-    });
+    const [business] = await this.prismaService.$transaction([
+      this.prismaService.business.delete({
+        where: {
+          id,
+          directorId,
+        },
+      }),
+
+      this.prismaService.user.update({
+        where: {
+          id: directorId,
+        },
+        data: {
+          businessQuantity: { decrement: 1 },
+        },
+      }),
+    ]);
 
     if (!business) {
       throw new NotFoundException('Бизнес не найден');
