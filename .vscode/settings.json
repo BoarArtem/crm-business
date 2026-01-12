@@ -51,6 +51,12 @@
     "chat.commandCenter.enabled": false,
     "window.commandCenter": false,
 
+    "background.fullscreen": {
+      "images": [
+        "https://private-user-images.githubusercontent.com/72853166/518609674-425f6c28-b86b-4482-9268-a9077b7e44ba.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjgxNzQxNzAsIm5iZiI6MTc2ODE3Mzg3MCwicGF0aCI6Ii83Mjg1MzE2Ni81MTg2MDk2NzQtNDI1ZjZjMjgtYjg2Yi00NDgyLTkyNjgtYTkwNzdiN2U0NGJhLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjAxMTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwMTExVDIzMjQzMFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWIzOWFjYjFmOGIwMjdjMmJlOTYzOTVkZWUxMTc0YmVmOWIyYWZiNDU2Yjg4YThkZTJmZGNlNTNkMzVlZTA3YWEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.F1rCcispPgJAA-XhN0pyGiF6m91qhGIJ-mkItWad0Rc"
+      ]
+    },
+
     "editor.cursorBlinking": "phase",
     "editor.cursorStyle": "line-thin",
     "editor.cursorSmoothCaretAnimation": "explicit",
