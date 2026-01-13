@@ -6,6 +6,8 @@ import { CustomerModule } from './customer/customer.module';
 import { BusinessModule } from './business/business.module';
 import { TelegramModule } from './telegram/telegram.module';
 import { UsersModule } from './users/users.module';
+import { PrometheusModule } from './prometheus/prometheus.module';
+import { PrometheusController } from './prometheus/prometheus.controller';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { UsersModule } from './users/users.module';
     BusinessModule,
     TelegramModule,
     UsersModule,
+    PrometheusModule,
   ],
+  controllers: [PrometheusController],
 })
 export class AppModule {}
