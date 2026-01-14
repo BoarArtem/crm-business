@@ -7,6 +7,6 @@ scrape_configs:
     metrics_path: /metrics
     static_configs:
       - targets:
-          - 'localhost:3010'
+          - 'host.docker.internal:3010'
         labels:
           app: 'crm-business-system'
