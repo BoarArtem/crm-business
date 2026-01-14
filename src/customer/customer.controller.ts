@@ -77,7 +77,7 @@ export class CustomerController {
 
   @ApiOperation({
     summary: 'Удаление пользователя за его айди',
-    description: 'Позволяет удалить пользователя по его айди',
+    description: 'Позволяет удалить клиента за его айди',
   })
   @ApiNotFoundResponse({ description: 'Клиент не найден' })
   @ApiBearerAuth('access-token')

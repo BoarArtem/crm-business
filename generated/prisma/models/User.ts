@@ -254,6 +254,7 @@ export type UserWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   business?: Prisma.BusinessListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
+  deals?: Prisma.DealListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -268,6 +269,7 @@ export type UserOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   business?: Prisma.BusinessOrderByRelationAggregateInput
   customers?: Prisma.CustomerOrderByRelationAggregateInput
+  deals?: Prisma.DealOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -285,6 +287,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   business?: Prisma.BusinessListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
+  deals?: Prisma.DealListRelationFilter
 }, "id" | "telegramId" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -326,11 +329,12 @@ export type UserCreateInput = {
   password: string
   firstName: string
   lastName: string
-  businessQuantity: number
+  businessQuantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   business?: Prisma.BusinessCreateNestedManyWithoutDirectorInput
   customers?: Prisma.CustomerCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealCreateNestedManyWithoutDirectorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -340,11 +344,12 @@ export type UserUncheckedCreateInput = {
   password: string
   firstName: string
   lastName: string
-  businessQuantity: number
+  businessQuantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   business?: Prisma.BusinessUncheckedCreateNestedManyWithoutDirectorInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealUncheckedCreateNestedManyWithoutDirectorInput
 }
 
 export type UserUpdateInput = {
@@ -359,6 +364,7 @@ export type UserUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   business?: Prisma.BusinessUpdateManyWithoutDirectorNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUpdateManyWithoutDirectorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -373,6 +379,7 @@ export type UserUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   business?: Prisma.BusinessUncheckedUpdateManyWithoutDirectorNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUncheckedUpdateManyWithoutDirectorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -382,7 +389,7 @@ export type UserCreateManyInput = {
   password: string
   firstName: string
   lastName: string
-  businessQuantity: number
+  businessQuantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -514,6 +521,20 @@ export type UserUpdateOneRequiredWithoutBusinessNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutBusinessInput, Prisma.UserUpdateWithoutBusinessInput>, Prisma.UserUncheckedUpdateWithoutBusinessInput>
 }
 
+export type UserCreateNestedOneWithoutDealsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDealsInput, Prisma.UserUncheckedCreateWithoutDealsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDealsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutDealsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutDealsInput, Prisma.UserUncheckedCreateWithoutDealsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutDealsInput
+  upsert?: Prisma.UserUpsertWithoutDealsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutDealsInput, Prisma.UserUpdateWithoutDealsInput>, Prisma.UserUncheckedUpdateWithoutDealsInput>
+}
+
 export type UserCreateWithoutCustomersInput = {
   id?: string
   telegramId?: bigint | number | null
@@ -521,10 +542,11 @@ export type UserCreateWithoutCustomersInput = {
   password: string
   firstName: string
   lastName: string
-  businessQuantity: number
+  businessQuantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   business?: Prisma.BusinessCreateNestedManyWithoutDirectorInput
+  deals?: Prisma.DealCreateNestedManyWithoutDirectorInput
 }
 
 export type UserUncheckedCreateWithoutCustomersInput = {
@@ -534,10 +556,11 @@ export type UserUncheckedCreateWithoutCustomersInput = {
   password: string
   firstName: string
   lastName: string
-  businessQuantity: number
+  businessQuantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   business?: Prisma.BusinessUncheckedCreateNestedManyWithoutDirectorInput
+  deals?: Prisma.DealUncheckedCreateNestedManyWithoutDirectorInput
 }
 
 export type UserCreateOrConnectWithoutCustomersInput = {
@@ -567,6 +590,7 @@ export type UserUpdateWithoutCustomersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   business?: Prisma.BusinessUpdateManyWithoutDirectorNestedInput
+  deals?: Prisma.DealUpdateManyWithoutDirectorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCustomersInput = {
@@ -580,6 +604,7 @@ export type UserUncheckedUpdateWithoutCustomersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   business?: Prisma.BusinessUncheckedUpdateManyWithoutDirectorNestedInput
+  deals?: Prisma.DealUncheckedUpdateManyWithoutDirectorNestedInput
 }
 
 export type UserCreateWithoutBusinessInput = {
@@ -589,10 +614,11 @@ export type UserCreateWithoutBusinessInput = {
   password: string
   firstName: string
   lastName: string
-  businessQuantity: number
+  businessQuantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   customers?: Prisma.CustomerCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealCreateNestedManyWithoutDirectorInput
 }
 
 export type UserUncheckedCreateWithoutBusinessInput = {
@@ -602,10 +628,11 @@ export type UserUncheckedCreateWithoutBusinessInput = {
   password: string
   firstName: string
   lastName: string
-  businessQuantity: number
+  businessQuantity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUserInput
+  deals?: Prisma.DealUncheckedCreateNestedManyWithoutDirectorInput
 }
 
 export type UserCreateOrConnectWithoutBusinessInput = {
@@ -635,6 +662,7 @@ export type UserUpdateWithoutBusinessInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.CustomerUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUpdateManyWithoutDirectorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBusinessInput = {
@@ -648,6 +676,79 @@ export type UserUncheckedUpdateWithoutBusinessInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutUserNestedInput
+  deals?: Prisma.DealUncheckedUpdateManyWithoutDirectorNestedInput
+}
+
+export type UserCreateWithoutDealsInput = {
+  id?: string
+  telegramId?: bigint | number | null
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  businessQuantity?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  business?: Prisma.BusinessCreateNestedManyWithoutDirectorInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutDealsInput = {
+  id?: string
+  telegramId?: bigint | number | null
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+  businessQuantity?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  business?: Prisma.BusinessUncheckedCreateNestedManyWithoutDirectorInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutDealsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutDealsInput, Prisma.UserUncheckedCreateWithoutDealsInput>
+}
+
+export type UserUpsertWithoutDealsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutDealsInput, Prisma.UserUncheckedUpdateWithoutDealsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutDealsInput, Prisma.UserUncheckedCreateWithoutDealsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutDealsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutDealsInput, Prisma.UserUncheckedUpdateWithoutDealsInput>
+}
+
+export type UserUpdateWithoutDealsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  telegramId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  businessQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  business?: Prisma.BusinessUpdateManyWithoutDirectorNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutDealsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  telegramId?: Prisma.NullableBigIntFieldUpdateOperationsInput | bigint | number | null
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  businessQuantity?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  business?: Prisma.BusinessUncheckedUpdateManyWithoutDirectorNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -658,11 +759,13 @@ export type UserUncheckedUpdateWithoutBusinessInput = {
 export type UserCountOutputType = {
   business: number
   customers: number
+  deals: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   business?: boolean | UserCountOutputTypeCountBusinessArgs
   customers?: boolean | UserCountOutputTypeCountCustomersArgs
+  deals?: boolean | UserCountOutputTypeCountDealsArgs
 }
 
 /**
@@ -689,6 +792,13 @@ export type UserCountOutputTypeCountCustomersArgs<ExtArgs extends runtime.Types.
   where?: Prisma.CustomerWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountDealsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DealWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -702,6 +812,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   updatedAt?: boolean
   business?: boolean | Prisma.User$businessArgs<ExtArgs>
   customers?: boolean | Prisma.User$customersArgs<ExtArgs>
+  deals?: boolean | Prisma.User$dealsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -745,6 +856,7 @@ export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = run
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   business?: boolean | Prisma.User$businessArgs<ExtArgs>
   customers?: boolean | Prisma.User$customersArgs<ExtArgs>
+  deals?: boolean | Prisma.User$dealsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -755,6 +867,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   objects: {
     business: Prisma.$BusinessPayload<ExtArgs>[]
     customers: Prisma.$CustomerPayload<ExtArgs>[]
+    deals: Prisma.$DealPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1162,6 +1275,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   readonly [Symbol.toStringTag]: "PrismaPromise"
   business<T extends Prisma.User$businessArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$businessArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BusinessPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customers<T extends Prisma.User$customersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$customersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  deals<T extends Prisma.User$dealsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$dealsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DealPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1633,6 +1747,30 @@ export type User$customersArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.CustomerScalarFieldEnum | Prisma.CustomerScalarFieldEnum[]
+}
+
+/**
+ * User.deals
+ */
+export type User$dealsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Deal
+   */
+  select?: Prisma.DealSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Deal
+   */
+  omit?: Prisma.DealOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DealInclude<ExtArgs> | null
+  where?: Prisma.DealWhereInput
+  orderBy?: Prisma.DealOrderByWithRelationInput | Prisma.DealOrderByWithRelationInput[]
+  cursor?: Prisma.DealWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DealScalarFieldEnum | Prisma.DealScalarFieldEnum[]
 }
 
 /**

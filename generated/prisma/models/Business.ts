@@ -217,6 +217,7 @@ export type BusinessWhereInput = {
   businessDescription?: Prisma.StringFilter<"Business"> | string
   businessCapitalization?: Prisma.IntFilter<"Business"> | number
   director?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  deals?: Prisma.DealListRelationFilter
 }
 
 export type BusinessOrderByWithRelationInput = {
@@ -226,6 +227,7 @@ export type BusinessOrderByWithRelationInput = {
   businessDescription?: Prisma.SortOrder
   businessCapitalization?: Prisma.SortOrder
   director?: Prisma.UserOrderByWithRelationInput
+  deals?: Prisma.DealOrderByRelationAggregateInput
 }
 
 export type BusinessWhereUniqueInput = Prisma.AtLeast<{
@@ -238,6 +240,7 @@ export type BusinessWhereUniqueInput = Prisma.AtLeast<{
   businessDescription?: Prisma.StringFilter<"Business"> | string
   businessCapitalization?: Prisma.IntFilter<"Business"> | number
   director?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  deals?: Prisma.DealListRelationFilter
 }, "id">
 
 export type BusinessOrderByWithAggregationInput = {
@@ -270,6 +273,7 @@ export type BusinessCreateInput = {
   businessDescription: string
   businessCapitalization: number
   director: Prisma.UserCreateNestedOneWithoutBusinessInput
+  deals?: Prisma.DealCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateInput = {
@@ -278,6 +282,7 @@ export type BusinessUncheckedCreateInput = {
   businessName: string
   businessDescription: string
   businessCapitalization: number
+  deals?: Prisma.DealUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUpdateInput = {
@@ -286,6 +291,7 @@ export type BusinessUpdateInput = {
   businessDescription?: Prisma.StringFieldUpdateOperationsInput | string
   businessCapitalization?: Prisma.IntFieldUpdateOperationsInput | number
   director?: Prisma.UserUpdateOneRequiredWithoutBusinessNestedInput
+  deals?: Prisma.DealUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateInput = {
@@ -294,6 +300,7 @@ export type BusinessUncheckedUpdateInput = {
   businessName?: Prisma.StringFieldUpdateOperationsInput | string
   businessDescription?: Prisma.StringFieldUpdateOperationsInput | string
   businessCapitalization?: Prisma.IntFieldUpdateOperationsInput | number
+  deals?: Prisma.DealUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessCreateManyInput = {
@@ -361,6 +368,11 @@ export type BusinessSumOrderByAggregateInput = {
   businessCapitalization?: Prisma.SortOrder
 }
 
+export type BusinessScalarRelationFilter = {
+  is?: Prisma.BusinessWhereInput
+  isNot?: Prisma.BusinessWhereInput
+}
+
 export type BusinessCreateNestedManyWithoutDirectorInput = {
   create?: Prisma.XOR<Prisma.BusinessCreateWithoutDirectorInput, Prisma.BusinessUncheckedCreateWithoutDirectorInput> | Prisma.BusinessCreateWithoutDirectorInput[] | Prisma.BusinessUncheckedCreateWithoutDirectorInput[]
   connectOrCreate?: Prisma.BusinessCreateOrConnectWithoutDirectorInput | Prisma.BusinessCreateOrConnectWithoutDirectorInput[]
@@ -403,11 +415,26 @@ export type BusinessUncheckedUpdateManyWithoutDirectorNestedInput = {
   deleteMany?: Prisma.BusinessScalarWhereInput | Prisma.BusinessScalarWhereInput[]
 }
 
+export type BusinessCreateNestedOneWithoutDealsInput = {
+  create?: Prisma.XOR<Prisma.BusinessCreateWithoutDealsInput, Prisma.BusinessUncheckedCreateWithoutDealsInput>
+  connectOrCreate?: Prisma.BusinessCreateOrConnectWithoutDealsInput
+  connect?: Prisma.BusinessWhereUniqueInput
+}
+
+export type BusinessUpdateOneRequiredWithoutDealsNestedInput = {
+  create?: Prisma.XOR<Prisma.BusinessCreateWithoutDealsInput, Prisma.BusinessUncheckedCreateWithoutDealsInput>
+  connectOrCreate?: Prisma.BusinessCreateOrConnectWithoutDealsInput
+  upsert?: Prisma.BusinessUpsertWithoutDealsInput
+  connect?: Prisma.BusinessWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.BusinessUpdateToOneWithWhereWithoutDealsInput, Prisma.BusinessUpdateWithoutDealsInput>, Prisma.BusinessUncheckedUpdateWithoutDealsInput>
+}
+
 export type BusinessCreateWithoutDirectorInput = {
   id?: string
   businessName: string
   businessDescription: string
   businessCapitalization: number
+  deals?: Prisma.DealCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessUncheckedCreateWithoutDirectorInput = {
@@ -415,6 +442,7 @@ export type BusinessUncheckedCreateWithoutDirectorInput = {
   businessName: string
   businessDescription: string
   businessCapitalization: number
+  deals?: Prisma.DealUncheckedCreateNestedManyWithoutBusinessInput
 }
 
 export type BusinessCreateOrConnectWithoutDirectorInput = {
@@ -454,6 +482,54 @@ export type BusinessScalarWhereInput = {
   businessCapitalization?: Prisma.IntFilter<"Business"> | number
 }
 
+export type BusinessCreateWithoutDealsInput = {
+  id?: string
+  businessName: string
+  businessDescription: string
+  businessCapitalization: number
+  director: Prisma.UserCreateNestedOneWithoutBusinessInput
+}
+
+export type BusinessUncheckedCreateWithoutDealsInput = {
+  id?: string
+  directorId: string
+  businessName: string
+  businessDescription: string
+  businessCapitalization: number
+}
+
+export type BusinessCreateOrConnectWithoutDealsInput = {
+  where: Prisma.BusinessWhereUniqueInput
+  create: Prisma.XOR<Prisma.BusinessCreateWithoutDealsInput, Prisma.BusinessUncheckedCreateWithoutDealsInput>
+}
+
+export type BusinessUpsertWithoutDealsInput = {
+  update: Prisma.XOR<Prisma.BusinessUpdateWithoutDealsInput, Prisma.BusinessUncheckedUpdateWithoutDealsInput>
+  create: Prisma.XOR<Prisma.BusinessCreateWithoutDealsInput, Prisma.BusinessUncheckedCreateWithoutDealsInput>
+  where?: Prisma.BusinessWhereInput
+}
+
+export type BusinessUpdateToOneWithWhereWithoutDealsInput = {
+  where?: Prisma.BusinessWhereInput
+  data: Prisma.XOR<Prisma.BusinessUpdateWithoutDealsInput, Prisma.BusinessUncheckedUpdateWithoutDealsInput>
+}
+
+export type BusinessUpdateWithoutDealsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  businessName?: Prisma.StringFieldUpdateOperationsInput | string
+  businessDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  businessCapitalization?: Prisma.IntFieldUpdateOperationsInput | number
+  director?: Prisma.UserUpdateOneRequiredWithoutBusinessNestedInput
+}
+
+export type BusinessUncheckedUpdateWithoutDealsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  directorId?: Prisma.StringFieldUpdateOperationsInput | string
+  businessName?: Prisma.StringFieldUpdateOperationsInput | string
+  businessDescription?: Prisma.StringFieldUpdateOperationsInput | string
+  businessCapitalization?: Prisma.IntFieldUpdateOperationsInput | number
+}
+
 export type BusinessCreateManyDirectorInput = {
   id?: string
   businessName: string
@@ -466,6 +542,7 @@ export type BusinessUpdateWithoutDirectorInput = {
   businessName?: Prisma.StringFieldUpdateOperationsInput | string
   businessDescription?: Prisma.StringFieldUpdateOperationsInput | string
   businessCapitalization?: Prisma.IntFieldUpdateOperationsInput | number
+  deals?: Prisma.DealUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateWithoutDirectorInput = {
@@ -473,6 +550,7 @@ export type BusinessUncheckedUpdateWithoutDirectorInput = {
   businessName?: Prisma.StringFieldUpdateOperationsInput | string
   businessDescription?: Prisma.StringFieldUpdateOperationsInput | string
   businessCapitalization?: Prisma.IntFieldUpdateOperationsInput | number
+  deals?: Prisma.DealUncheckedUpdateManyWithoutBusinessNestedInput
 }
 
 export type BusinessUncheckedUpdateManyWithoutDirectorInput = {
@@ -483,6 +561,35 @@ export type BusinessUncheckedUpdateManyWithoutDirectorInput = {
 }
 
 
+/**
+ * Count Type BusinessCountOutputType
+ */
+
+export type BusinessCountOutputType = {
+  deals: number
+}
+
+export type BusinessCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  deals?: boolean | BusinessCountOutputTypeCountDealsArgs
+}
+
+/**
+ * BusinessCountOutputType without action
+ */
+export type BusinessCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the BusinessCountOutputType
+   */
+  select?: Prisma.BusinessCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * BusinessCountOutputType without action
+ */
+export type BusinessCountOutputTypeCountDealsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DealWhereInput
+}
+
 
 export type BusinessSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -491,6 +598,8 @@ export type BusinessSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   businessDescription?: boolean
   businessCapitalization?: boolean
   director?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deals?: boolean | Prisma.Business$dealsArgs<ExtArgs>
+  _count?: boolean | Prisma.BusinessCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["business"]>
 
 export type BusinessSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -522,6 +631,8 @@ export type BusinessSelectScalar = {
 export type BusinessOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "directorId" | "businessName" | "businessDescription" | "businessCapitalization", ExtArgs["result"]["business"]>
 export type BusinessInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   director?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  deals?: boolean | Prisma.Business$dealsArgs<ExtArgs>
+  _count?: boolean | Prisma.BusinessCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type BusinessIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   director?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -534,6 +645,7 @@ export type $BusinessPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   name: "Business"
   objects: {
     director: Prisma.$UserPayload<ExtArgs>
+    deals: Prisma.$DealPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -936,6 +1048,7 @@ readonly fields: BusinessFieldRefs;
 export interface Prisma__BusinessClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   director<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  deals<T extends Prisma.Business$dealsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Business$dealsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DealPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1363,6 +1476,30 @@ export type BusinessDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inte
    * Limit how many Businesses to delete.
    */
   limit?: number
+}
+
+/**
+ * Business.deals
+ */
+export type Business$dealsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Deal
+   */
+  select?: Prisma.DealSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Deal
+   */
+  omit?: Prisma.DealOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DealInclude<ExtArgs> | null
+  where?: Prisma.DealWhereInput
+  orderBy?: Prisma.DealOrderByWithRelationInput | Prisma.DealOrderByWithRelationInput[]
+  cursor?: Prisma.DealWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DealScalarFieldEnum | Prisma.DealScalarFieldEnum[]
 }
 
 /**

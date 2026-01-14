@@ -8,16 +8,19 @@ services:
       - "3010:3000"
       - "5555:5555"
     environment:
-      DATABASE_URL: ${DATABASE_URL}
-      JWT_SECRET: ${JWT_SECRET}
       JWT_ACCESS_TOKEN_TTL: ${JWT_ACCESS_TOKEN_TTL}
       JWT_REFRESH_TOKEN_TTL: ${JWT_REFRESH_TOKEN_TTL}
+      DATABASE_URL: ${DATABASE_URL}
+      UPSTASH_REDIS_REST_URL: ${UPSTASH_REDIS_REST_URL}
+      UPSTASH_REDIS_REST_TOKEN: ${UPSTASH_REDIS_REST_TOKEN}
+      JWT_SECRET: ${JWT_SECRET}
       BOT_TOKEN: ${BOT_TOKEN}
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     depends_on:
       - db
+      - redis 
     restart: unless-stopped
 
   db:
@@ -38,7 +41,18 @@ services:
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
-      - "9090:9090"  
+      - "9090:9090"
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis_app
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --save 60 1 --loglevel warning
 
 volumes:
   crm_pet_pg:
+  redis_data:

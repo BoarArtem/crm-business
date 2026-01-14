@@ -60,7 +60,7 @@ export class BusinessController {
   }
 
   @ApiOperation({
-    summary: 'Удаление бизнеса по его айди',
+    summary: 'Удаление бизнеса за его айди',
     description: 'Позволяет пользователя удалить бизнесс введя его айди',
   })
   @ApiNotFoundResponse({ description: 'Бизнес не найден' })

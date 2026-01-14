@@ -32,3 +32,8 @@ export type Customer = Prisma.CustomerModel
  * 
  */
 export type Business = Prisma.BusinessModel
+/**
+ * Model Deal
+ * 
+ */
+export type Deal = Prisma.DealModel

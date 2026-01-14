@@ -21,7 +21,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @ApiOperation({
-    summary: 'Изменения информации пользователя',
+    summary: 'Изменения информации аккаунта пользователя',
     description: 'Позволяет пользователю изменить firstname и lastname',
   })
   @ApiOkResponse({ description: 'Успешно измененный пользователь' })
@@ -37,7 +37,7 @@ export class UsersController {
   }
 
   @ApiOperation({
-    summary: 'Удаление пользователя',
+    summary: 'Удаление аккаунта пользователя',
     description: 'Позволеяет пользователю удалить свой аккаунт',
   })
   @ApiOkResponse({ description: 'Успешно удалён аккаунт' })

@@ -8,6 +8,8 @@ import { TelegramModule } from './telegram/telegram.module';
 import { UsersModule } from './users/users.module';
 import { PrometheusModule } from './prometheus/prometheus.module';
 import { PrometheusController } from './prometheus/prometheus.controller';
+import { RedisModule } from './redis/redis.module';
+import { DealsModule } from './deals/deals.module';
 
 @Module({
   imports: [
@@ -21,6 +23,8 @@ import { PrometheusController } from './prometheus/prometheus.controller';
     TelegramModule,
     UsersModule,
     PrometheusModule,
+    RedisModule,
+    DealsModule,
   ],
   controllers: [PrometheusController],
 })
