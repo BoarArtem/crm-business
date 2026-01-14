@@ -64,4 +64,3 @@ model Business {
 
   @@map("business")
 }
-  
