@@ -47,4 +47,15 @@ export class DealsService {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return deal;
   }
+
+  async deleteDeal(id: string, directorId: string) {
+    return await this.prismaService.deal.deleteMany({
+      where: {
+        directorId,
+        id,
+      },
+    });
+
+    return 'Сделка была успешна удалена';
+  }
 }
