@@ -1,4 +1,9 @@
-import { ForbiddenException, Inject, Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateDealDto } from './dto/create-deal.dto';
 import { Redis } from '@upstash/redis';
@@ -49,12 +54,16 @@ export class DealsService {
   }
 
   async deleteDeal(id: string, directorId: string) {
-    return await this.prismaService.deal.deleteMany({
+    const deal = await this.prismaService.deal.deleteMany({
       where: {
         directorId,
         id,
       },
     });
+
+    if (!deal) {
+      throw new NotFoundException('Сделка не найдена');
+    }
 
     return 'Сделка была успешна удалена';
   }
